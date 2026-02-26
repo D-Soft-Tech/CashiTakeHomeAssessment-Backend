@@ -8,26 +8,28 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+import static com.adebayo.cashiTakeHomeAssessmentBackend.utils.AppConstants.FIREBASE_CREDENTIALS_TAG;
 
 @Configuration
 public class FirebaseConfig {
     @Bean
-    public Firestore firestore() {
-        if (FirebaseApp.getApps().isEmpty()) {
-            try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("firebase-admin-sdk.json")) {
-                if (inputStream != null) {
-                    FirebaseOptions firebaseOptions = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(inputStream)).build();
-                    FirebaseApp.initializeApp(firebaseOptions);
-                } else {
-                    throw new NullPointerException("firebase-admin-sdk.json could not be located in the project resources");
-                }
-            } catch (IOException e) {
-                System.out.println(e.getLocalizedMessage());
-                throw new RuntimeException(e);
+    public Firestore firestore() throws IOException {
+        String firebaseConfig = System.getenv(FIREBASE_CREDENTIALS_TAG);
+        if (firebaseConfig != null) {
+            InputStream serviceAccountInputStream = new ByteArrayInputStream(firebaseConfig.getBytes(StandardCharsets.UTF_8));
+            GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccountInputStream);
+            FirebaseOptions firebaseOptions = FirebaseOptions.builder().setCredentials(credentials).build();
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(firebaseOptions);
             }
+            return FirestoreClient.getFirestore();
+        } else {
+            throw new NullPointerException("Could not find the env. variable, FIREBASE_CREDENTIALS");
         }
-        return FirestoreClient.getFirestore();
     }
 }
