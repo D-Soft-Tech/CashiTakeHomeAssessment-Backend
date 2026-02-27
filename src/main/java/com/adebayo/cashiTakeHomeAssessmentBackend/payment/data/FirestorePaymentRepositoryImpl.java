@@ -10,6 +10,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.ExecutionException;
 
@@ -17,10 +18,9 @@ import static com.adebayo.cashiTakeHomeAssessmentBackend.utils.AppConstants.FIRE
 import static com.adebayo.cashiTakeHomeAssessmentBackend.utils.EntityMapper.mapToPaymentResponse;
 import static com.adebayo.cashiTakeHomeAssessmentBackend.utils.EntityMapper.toPaymentResponse;
 
-@Component
+@Repository
 public class FirestorePaymentRepositoryImpl implements FirestorePaymentRepository {
-    @Autowired
-    private Firestore firestore;
+    private final Firestore firestore;
 
     @Override
     public PaymentProcessingResponse processPaymentViaFirebaseFireStore(PaymentRequestModel paymentRequestModel) {
@@ -41,5 +41,9 @@ public class FirestorePaymentRepositoryImpl implements FirestorePaymentRepositor
         } catch (ExecutionException | InterruptedException e) {
             return toPaymentResponse(paymentRequestModel, PaymentStatus.ABORTED);
         }
+    }
+
+    public FirestorePaymentRepositoryImpl(Firestore firestore) {
+        this.firestore = firestore;
     }
 }
