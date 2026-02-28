@@ -20,4 +20,5 @@ public class PaymentProcessingResponse {
     private String requestDateTime;
     private String transactionDateTime;
     private String responseMessage;
+    private String narration;
 }

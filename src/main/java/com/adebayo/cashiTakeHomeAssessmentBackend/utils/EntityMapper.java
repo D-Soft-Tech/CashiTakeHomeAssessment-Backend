@@ -7,6 +7,8 @@ import com.adebayo.cashiTakeHomeAssessmentBackend.payment.domain.model.PaymentRe
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 
+import java.util.Objects;
+
 import static com.adebayo.cashiTakeHomeAssessmentBackend.utils.DateTimeUtil.fromServerTimeToNormalTime;
 import static com.adebayo.cashiTakeHomeAssessmentBackend.utils.DateTimeUtil.getCurrentDateTimeAsString;
 
@@ -18,6 +20,7 @@ public final class EntityMapper {
                 .recipientEmail(requestEntity.getRecipientEmail())
                 .transactionAmount(requestEntity.getAmount())
                 .currency(requestEntity.getCurrency())
+                .narration(requestEntity.getNarration())
                 .build();
     }
 
@@ -34,7 +37,7 @@ public final class EntityMapper {
     }
 
     public static PaymentProcessingResponse mapToPaymentResponse(DocumentSnapshot firestoreResponseDocument, PaymentStatus paymentStatus, PaymentRequestModel paymentRequestModel) {
-        String processedTime = fromServerTimeToNormalTime(firestoreResponseDocument.getCreateTime());
+        String processedTime = fromServerTimeToNormalTime(Objects.requireNonNull(firestoreResponseDocument.getCreateTime()));
 
         return PaymentProcessingResponse.builder()
                 .paymentStatus(paymentStatus)
@@ -45,6 +48,7 @@ public final class EntityMapper {
                 .requestDateTime(paymentRequestModel.getRequestTime())
                 .transactionDateTime(processedTime)
                 .responseMessage(paymentStatus.getTransactionMessage())
+                .narration(paymentRequestModel.getNarration())
                 .build();
     }
 }

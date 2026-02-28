@@ -27,4 +27,5 @@ public class PaymentRequestEntity {
     private BigDecimal amount;
 
     private SupportedCurrency currency;
+    private String narration;
 }

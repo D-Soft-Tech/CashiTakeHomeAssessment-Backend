@@ -22,4 +22,5 @@ public class PaymentRequestModel {
     private BigDecimal transactionAmount;
     private SupportedCurrency currency;
     private String requestTime;
+    private String narration;
 }
