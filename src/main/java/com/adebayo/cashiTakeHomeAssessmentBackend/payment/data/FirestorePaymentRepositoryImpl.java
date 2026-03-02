@@ -25,6 +25,7 @@ public class FirestorePaymentRepositoryImpl implements FirestorePaymentRepositor
     @Override
     public PaymentProcessingResponse processPaymentViaFirebaseFireStore(PaymentRequestModel paymentRequestModel) {
         try {
+            paymentRequestModel.setPaymentStatus(PaymentStatus.SUCCESSFUL);
             ApiFuture<DocumentReference> firestorePaymentResponse = firestore.collection(FIRESTORE_PAYMENT_DOCUMENT).add(paymentRequestModel);
             String documentId = firestorePaymentResponse.get().getId(); // blocks until response is available
             DocumentSnapshot appFirestoreCreatedPaymentDocument = firestore.collection(FIRESTORE_PAYMENT_DOCUMENT).document(documentId).get().get();
