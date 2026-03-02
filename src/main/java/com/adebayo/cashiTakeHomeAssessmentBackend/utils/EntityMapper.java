@@ -21,7 +21,7 @@ public final class EntityMapper {
                 .transactionAmount(requestEntity.getAmount())
                 .currency(requestEntity.getCurrency())
                 .narration(requestEntity.getNarration())
-                .paymentStatus(PaymentStatus.getRandomStatus())
+                .paymentStatus(PaymentStatus.SUCCESSFUL)
                 .build();
     }
 
