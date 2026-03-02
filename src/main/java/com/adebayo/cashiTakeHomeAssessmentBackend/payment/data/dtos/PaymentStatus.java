@@ -1,7 +1,9 @@
 package com.adebayo.cashiTakeHomeAssessmentBackend.payment.data.dtos;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public enum PaymentStatus {
-    PENDING, PROCESSING, SUCCESSFUL, DECLINED, FAILED, ABORTED;
+    PENDING, SUCCESSFUL, DECLINED, FAILED, ABORTED;
 
     public String getTransactionMessage() {
         switch (this) {
@@ -20,13 +22,16 @@ public enum PaymentStatus {
             case DECLINED -> {
                 return "Transaction Declined";
             }
-            case PROCESSING -> {
-                return "Still processing, kindly wait";
-            }
 
             default -> {
                 return "An unexpected error occurred";
             }
         }
+    }
+
+    public static PaymentStatus getRandomStatus() {
+        PaymentStatus[] values = PaymentStatus.values();
+        int randomIndex = ThreadLocalRandom.current().nextInt(values.length);
+        return values[randomIndex];
     }
 }

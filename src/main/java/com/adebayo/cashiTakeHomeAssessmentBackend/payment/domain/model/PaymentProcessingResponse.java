@@ -14,10 +14,10 @@ import java.math.BigDecimal;
 public class PaymentProcessingResponse {
     private String transactionReference;
     private String recipientEmail;
-    private BigDecimal amount;
+    private BigDecimal transactionAmount;
     private SupportedCurrency currency;
     private PaymentStatus paymentStatus;
-    private String requestDateTime;
+    private String requestTime;
     private String transactionDateTime;
     private String responseMessage;
     private String narration;

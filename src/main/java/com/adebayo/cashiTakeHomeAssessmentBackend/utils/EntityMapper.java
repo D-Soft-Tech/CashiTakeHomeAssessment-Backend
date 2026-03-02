@@ -21,13 +21,14 @@ public final class EntityMapper {
                 .transactionAmount(requestEntity.getAmount())
                 .currency(requestEntity.getCurrency())
                 .narration(requestEntity.getNarration())
+                .paymentStatus(PaymentStatus.getRandomStatus())
                 .build();
     }
 
     public static PaymentProcessingResponse toPaymentResponse(PaymentRequestModel paymentRequestModel, PaymentStatus paymentStatus) {
         return PaymentProcessingResponse.builder()
                 .paymentStatus(paymentStatus)
-                .amount(paymentRequestModel.getTransactionAmount())
+                .transactionAmount(paymentRequestModel.getTransactionAmount())
                 .currency(paymentRequestModel.getCurrency())
                 .transactionReference(paymentRequestModel.getTransactionReference())
                 .recipientEmail(paymentRequestModel.getRecipientEmail())
@@ -41,11 +42,11 @@ public final class EntityMapper {
 
         return PaymentProcessingResponse.builder()
                 .paymentStatus(paymentStatus)
-                .amount(paymentRequestModel.getTransactionAmount())
+                .transactionAmount(paymentRequestModel.getTransactionAmount())
                 .currency(paymentRequestModel.getCurrency())
                 .transactionReference(paymentRequestModel.getTransactionReference())
                 .recipientEmail(paymentRequestModel.getRecipientEmail())
-                .requestDateTime(paymentRequestModel.getRequestTime())
+                .requestTime(paymentRequestModel.getRequestTime())
                 .transactionDateTime(processedTime)
                 .responseMessage(paymentStatus.getTransactionMessage())
                 .narration(paymentRequestModel.getNarration())
