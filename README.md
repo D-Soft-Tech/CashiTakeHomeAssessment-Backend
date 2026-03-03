@@ -49,15 +49,16 @@ message if validation fails.
 
 ## 🧠 Technical Stack
 
-Component            Technology
-  -------------------- -----------------------------
-Backend Framework    Java Spring Boot
-Build Tool           Maven
-Java Version         17+
-API Server           Embedded Tomcat
-JSON Serialization   Jackson
-Validation           Spring Validation
-Logging              Spring Boot Starter Logging
+| Component          | Technology                    |
+|--------------------|-------------------------------|
+| Backend Framework  | Java Spring Boot              |
+| Build Tool         | Maven                         |
+| Java Version       | 17+                           |
+| API Server         | Embedded Tomcat               |
+| JSON Serialization | Jackson                       |
+| Validation         | Spring Validation             |
+| Logging            | Spring Boot Starter Logging   |
+| Deployment         | Deployed on Render via Docker |
 
 ------------------------------------------------------------------------
 
